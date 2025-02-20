@@ -296,7 +296,11 @@ class MetaHandler(
     val intent = Intent(getActionName())
 
     // This is your application's FB ID
-    intent.putExtra("source_application", facebookAppId)
+    if (platform == "facebook") {
+      intent.putExtra("com.facebook.platform.extra.APPLICATION_ID", facebookAppId)
+    } else {
+      intent.putExtra("source_application", facebookAppId)
+    }
 
     if (backgroundImageUri !== null) {
       // Attach your image to the intent from a URI
@@ -329,7 +333,11 @@ class MetaHandler(
 
   private fun getActionName(): String {
     val action = if (placement == "stories") "ADD_TO_STORY" else "ADD_TO_FEED"
-    return "com.${platform}.share.${action}"
+    return if (platform == "facebook") {
+        "com.facebook.stories.$action"
+    } else {
+        "com.instagram.share.$action"
+    }
   }
 
   private fun getPackageName(): String {

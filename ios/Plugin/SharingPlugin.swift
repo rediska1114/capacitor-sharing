@@ -178,19 +178,23 @@ class MetaHandler: ShareTargetHandler {
       var pasteboardItems: [String: Any] = [:]
 
       if let backgroundImageData = backgroundImage?.pngData() {
-        pasteboardItems["com.instagram.sharedSticker.backgroundImage"] = backgroundImageData
+        pasteboardItems["com.\(self.platform).sharedSticker.backgroundImage"] = backgroundImageData
       }
 
       if let stickerImageData = stickerImage?.pngData() {
-        pasteboardItems["com.instagram.sharedSticker.stickerImage"] = stickerImageData
+        pasteboardItems["com.\(self.platform).sharedSticker.stickerImage"] = stickerImageData
       }
 
       if let backgroundTopColor = backgroundTopColor {
-        pasteboardItems["com.instagram.sharedSticker.backgroundTopColor"] = backgroundTopColor
+        pasteboardItems["com.\(self.platform).sharedSticker.backgroundTopColor"] = backgroundTopColor
       }
 
       if let backgroundBottomColor = backgroundBottomColor {
-        pasteboardItems["com.instagram.sharedSticker.backgroundBottomColor"] = backgroundBottomColor
+        pasteboardItems["com.\(self.platform).sharedSticker.backgroundBottomColor"] = backgroundBottomColor
+      }
+
+      if self.platform == "facebook" {
+        pasteboardItems["com.facebook.sharedSticker.appID"] = facebookAppId
       }
 
       let pasteboardOptions: [UIPasteboard.OptionsKey: Any] = [
